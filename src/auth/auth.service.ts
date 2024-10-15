@@ -41,8 +41,27 @@ export class AuthService {
     if (user && (await compare(authDto.password, user.password))) {
       const { password, ...result } = user;
       return result;
-    } else {
-      throw new UnauthorizedException('Invalid credentials');
+    }
+    throw new UnauthorizedException('Invalid credentials');
+  }
+
+  async refreshToken(user: { username: string; sub: { name: string } }) {
+    {
+      const payload = {
+        username: user.username,
+        sub: user.sub,
+      };
+
+      return {
+        access: await this.jwt.signAsync(payload, {
+          expiresIn: '1d',
+          secret: process.env.JWT_SECRET_TOKEN_KEY,
+        }),
+        refresh: await this.jwt.signAsync(payload, {
+          expiresIn: '1d',
+          secret: process.env.JWT_REFRESH_TOKEN_KEY,
+        }),
+      };
     }
   }
 }
