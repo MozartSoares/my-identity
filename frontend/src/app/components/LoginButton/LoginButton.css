@@ -1,0 +1,21 @@
+
+.logout {
+  color: red;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem ;
+  gap: 1rem;
+}
+
+span, .register {
+  color: lime;
+}
+
+.login {
+  color: rgb(0, 217, 255);
+}

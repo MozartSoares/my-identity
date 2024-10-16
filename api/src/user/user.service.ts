@@ -8,7 +8,7 @@ export class UserService {
 
   async create(userDto: CreateUserDto) {
     //Valida se já existe o usuário com esse email
-    const user = this.findByEmail(userDto.email);
+    const user = await this.findByEmail(userDto.email);
     if (user) throw new ConflictException('User already exists');
 
     //Cria o usuário, aplicando hash pra criptografar a senha
