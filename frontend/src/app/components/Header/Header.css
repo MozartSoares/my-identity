@@ -13,4 +13,6 @@ header {
     gap: 1rem;
   }
 
-  
+.profile-link {
+  cursor: pointer;
+}

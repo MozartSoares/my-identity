@@ -1,0 +1,48 @@
+.home-container {
+  width: 60%;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #333333;
+  border-radius: 10px;
+  color: white;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title-container .register {
+  background-color: #444444;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #444444;
+  font-weight: bold;
+}
+
+table tbody tr:hover {
+  background-color: #555555;
+  cursor: pointer;
+}
+
+table tbody tr {
+  transition: background-color 0.2s ease;
+}

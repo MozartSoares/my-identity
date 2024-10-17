@@ -1,9 +1,10 @@
 "use client"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./Profile.css"
 import Header from "../components/Header"
 import { userDto } from "../common/types"
 import { useSession } from "next-auth/react"
+import { API_URL } from "../common/Constants"
 
 type Props = {
   params: {
@@ -13,84 +14,52 @@ type Props = {
 
 const Profile = (props: Props) => {
   const { data: session } = useSession()
-
-  const payload = useRef<Omit<userDto, "password">>({
+  const [user, setUser] = useState<Omit<userDto, "password">>({
     name: "",
     email: "",
   })
 
-  const [isEditing, setIsEditing] = useState(false)
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (props.params.id) {
+        const response = await fetch(`${API_URL}/user/${props.params.id}`, {
+          headers: {
+            Authorization: `Bearer ${session?.tokens.access}`,
+          },
+        })
 
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    payload.current = {
-      ...payload.current,
-      [e.target.name]: e.target.value,
+        if (response.ok) {
+          const data = await response.json()
+          setUser({
+            name: data.name,
+            email: data.email,
+          })
+        }
+      } else {
+        setUser({
+          name: session?.user?.name || "a",
+          email: session?.user?.email || "a",
+        })
+      }
     }
-  }
-
-  const handleSave = () => {
-    // Aqui você pode integrar a lógica de salvar as alterações
-    setIsEditing(false)
-    alert("Informações salvas com sucesso!")
-  }
+    fetchUserProfile()
+  }, [props.params.id, session])
 
   return (
     <>
       <Header />
       <div className="profile-container">
-        <h2 className="title">Meu Perfil</h2>
+        <h2 className="title">{props.params.id ? "Perfil" : "Meu Perfil"}</h2>
         <div className="profile-form">
           <div className="profile-field">
             <label htmlFor="name">Nome</label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="name"
-                id="name"
-                maxLength={50}
-                value={session?.user.name}
-                onChange={handleChange}
-                placeholder="ex: João Silva"
-              />
-            ) : (
-              <p>{session?.user.name}</p>
-            )}
+            <p>{user.name}</p>
           </div>
 
           <div className="profile-field">
             <label htmlFor="email">Email</label>
-            {isEditing ? (
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={session?.user.email}
-                onChange={handleChange}
-                placeholder="ex: joao.silva@gmail.com"
-              />
-            ) : (
-              <p>{session?.user.email}</p>
-            )}
+            <p>{user.email}</p>
           </div>
-
-          {isEditing ? (
-            <div className="profile-buttons">
-              <button className="cancel-btn" onClick={handleEditToggle}>
-                Cancelar
-              </button>
-              <button className="save-btn" onClick={handleSave}>
-                Salvar
-              </button>
-            </div>
-          ) : (
-            <button className="edit-btn" onClick={handleEditToggle}>
-              Editar Informações
-            </button>
-          )}
         </div>
       </div>
     </>
