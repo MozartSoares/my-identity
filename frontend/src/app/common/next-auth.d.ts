@@ -10,12 +10,12 @@ declare module "next-auth" {
     tokens: {
       access: string
       refresh: string
+      expiresIn: number
     }
   }
 }
 
 import { JWT } from "next-auth/jwt"
-
 declare module "next-auth/jwt" {
   interface JWT {
     user: {
@@ -25,7 +25,8 @@ declare module "next-auth/jwt" {
     }
     tokens: {
       access: string
-      refresh: stri
+      refresh: string
+      expiresIn: number
     }
   }
 }

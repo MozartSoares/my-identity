@@ -4,7 +4,7 @@
   color: white; 
   padding: 20px;
   border-radius: 5px;
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
   margin: 2rem auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -32,11 +32,11 @@ h2 {
   color: white; 
 }
 
-button, #link {
+.register-btn, #link {
   width: 100%;
   padding: 10px;
-  background-color: lime; 
-  color: #292929;
+  background-color: rgb(3, 173, 3); 
+  color: #ccc;
   font-weight: bolder;
   font-size: 1rem;
   border: none;
@@ -54,8 +54,8 @@ button, #link {
   background-color: #b30000ce; 
 }
 
-button:hover {
-  background-color: rgba(0, 255, 0, 0.778); 
+.register-btn:hover {
+  background-color: rgba(2, 203, 2, 0.631)
 }
 
 .button-container {

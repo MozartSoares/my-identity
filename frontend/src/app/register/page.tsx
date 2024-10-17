@@ -6,12 +6,7 @@ import { API_URL } from "@/app/common/Constants"
 import { toast } from "react-toastify"
 import Header from "../components/Header"
 import { useRouter } from "next/navigation"
-
-type userDto = {
-  name: string
-  email: string
-  password: string
-}
+import { userDto } from "../common/types"
 
 const Register = () => {
   const payload = useRef<userDto>({
@@ -56,6 +51,7 @@ const Register = () => {
             <input
               type="text"
               id="name"
+              maxLength={50}
               placeholder="ex: João Silva"
               onChange={(e) => (payload.current.name = e.target.value)}
               required
@@ -66,6 +62,7 @@ const Register = () => {
             <input
               type="email"
               id="email"
+              maxLength={50}
               placeholder="ex: joao.silva@gmail.com"
               onChange={(e) => (payload.current.email = e.target.value)}
               required
@@ -85,7 +82,9 @@ const Register = () => {
             <Link id="link" href="/">
               Cancelar
             </Link>
-            <button type="submit">Cadastrar</button>
+            <button className="register-btn" type="submit">
+              Cadastrar
+            </button>
           </div>
         </form>
       </div>
